@@ -1,0 +1,14 @@
+# Import cache
+.import/
+# Mono preproc
+.mono/
+# IDE folders
+.vs/
+.vscode/
+# Might contain dangerous data
+export_presets.cfg
+
+# Binaries
+bin/
+build/
+lib/
