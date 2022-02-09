@@ -17,7 +17,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Body" type="Area2D" parent="."]
 
-[node name="Collider" type="CollisionShape2D" parent="Area2D"]
+[node name="Collider" type="CollisionShape2D" parent="Body"]
 shape = SubResource( 1 )

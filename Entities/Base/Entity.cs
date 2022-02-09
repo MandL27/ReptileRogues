@@ -9,7 +9,7 @@ public class Entity : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Area = GetNode<Area2D>("Area2D");
+		Area = GetNode<Area2D>("Body");
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
