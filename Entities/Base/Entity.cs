@@ -18,7 +18,7 @@ public class Entity : Node2D
 
 	}
 
-	protected Vector2 GetTilePos()
+	public Vector2 GetTilePos()
 	{
 		return new Vector2((int)Position.x / 24, (int)Position.y / 24);
 	}
