@@ -18,6 +18,13 @@ __meta__ = {
 }
 
 [node name="Body" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 56
 
 [node name="Collider" type="CollisionShape2D" parent="Body"]
 shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[connection signal="area_entered" from="Body" to="." method="OnBodyEntered"]
