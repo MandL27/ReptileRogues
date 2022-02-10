@@ -49,6 +49,7 @@ public class Enemy : Entity
 		{
 			GD.PushWarning($"{Name}: Enemy path is not a closed circuit!");
 		}
+		PathCells.RemoveAt(PathCells.Count - 1);
 		Heading = PathCells[NextCell] - PathCells[CurrCell];
 		SightPivot.Rotation = Heading.Angle();
 		GD.Print($"{Name}: ({TopLeft}, {BottomRight})");
@@ -67,18 +68,25 @@ public class Enemy : Entity
 			SpeedRem--;
 			if (IsGridAligned())
 			{
-
 				if (ChaseTarget != null)
 				{
 					LinkedList<Vector2> vecs = FindAStarPath(((Player)ChaseTarget).GetTilePos());
-					Heading = vecs.ElementAt(1) - GetTilePos();
-					if (!IsInRange(GetTilePos() + Heading))
+					if (vecs.Count > 1)
+					{
+						Heading = vecs.ElementAt(1) - GetTilePos();
+					}
+					if (!IsInRange(GetTilePos() + Heading) || vecs.Count < 2)
 					{
 						ChaseTarget = null;
 						Heading *= -1;
 						ReturnQueue = FindAStarPath(PathCells[CurrCell]);
 						Heading = ReturnQueue.ElementAt(1) - GetTilePos();
 					}
+				}
+				else if (GetTilePos() == PathCells[CurrCell])
+				{
+					ReturnQueue.Clear();
+					Heading = PathCells[NextCell] - PathCells[CurrCell];
 				}
 				else if (GetTilePos() == PathCells[NextCell])
 				{
@@ -108,6 +116,12 @@ public class Enemy : Entity
 
 	LinkedList<Vector2> FindAStarPath(Vector2 target)
 	{
+		if (target == GetTilePos())
+		{
+			LinkedList<Vector2> list = new LinkedList<Vector2>();
+			list.AddLast(GetTilePos());
+			return list;
+		}
 		Dictionary<Vector2, LinkedList<Vector2>> visited = new Dictionary<Vector2, LinkedList<Vector2>>();
 		PriorityQueue<Vector2> queue = new PriorityQueue<Vector2>();
 		queue.Push(GetTilePos(), 0);
@@ -119,6 +133,7 @@ public class Enemy : Entity
 			{
 				// TODO: occlude on walls and water(?)
 				Vector2 next = node + dir;
+				if (visited.ContainsKey(next)) continue;
 				LinkedList<Vector2> list = new LinkedList<Vector2>(visited[node]);
 				list.AddLast(node);
 				if (next == target)
@@ -147,6 +162,7 @@ public class Enemy : Entity
 				}
 				queue.Push(next, priority);
 				visited[next] = list;
+				GD.Print($"{Name}: {queue.Count}");
 			}
 		}
 		return null;

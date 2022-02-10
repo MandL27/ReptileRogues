@@ -5,6 +5,10 @@ using System.Collections.Generic;
 public class PriorityQueue<T>
 {
 	private LinkedList<PQItem<T>> Queue = new LinkedList<PQItem<T>>();
+    public int Count
+    {
+        get => Queue.Count;
+    }
 
 	public void Push(PQItem<T> item)
 	{
