@@ -24,6 +24,10 @@ public class Enemy : Entity
 	public override void _Ready()
 	{
 		SightPivot = GetNode<Node2D>("Pivot");
+		if (Type == EnemyType.Normal)
+		{
+			SightPivot.GetNode<Area2D>("Sight").GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
+		}
 		PathCells = new List<Vector2>();
 		Vector2 pos = GetTilePos();
 		PathCells.Add(pos);
@@ -162,10 +166,9 @@ public class Enemy : Entity
 				}
 				queue.Push(next, priority);
 				visited[next] = list;
-				GD.Print($"{Name}: {queue.Count}");
 			}
 		}
-		return null;
+		return new LinkedList<Vector2>();
 	}
 }
 
