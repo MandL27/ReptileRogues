@@ -61,6 +61,6 @@ current = true
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -4 )
 frames = SubResource( 4 )
-animation = "RightIdle"
+animation = "UpIdle"
 
 [connection signal="area_entered" from="Body" to="." method="OnBodyEntered"]

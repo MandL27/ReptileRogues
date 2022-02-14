@@ -56,7 +56,6 @@ public class Enemy : Entity
 		PathCells.RemoveAt(PathCells.Count - 1);
 		Heading = PathCells[NextCell] - PathCells[CurrCell];
 		SightPivot.Rotation = Heading.Angle();
-		GD.Print($"{Name}: ({TopLeft}, {BottomRight})");
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.

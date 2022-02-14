@@ -5,49 +5,63 @@ using System.Collections.Generic;
 public class PriorityQueue<T>
 {
 	private LinkedList<PQItem<T>> Queue = new LinkedList<PQItem<T>>();
-    public int Count
-    {
-        get => Queue.Count;
-    }
+	public int Count
+	{
+		get => Queue.Count;
+	}
 
 	public void Push(PQItem<T> item)
 	{
 		for (LinkedListNode<PQItem<T>> i = Queue.First; i != null; i = i.Next)
 		{
 			if (i.Value.Priority > item.Priority)
-            {
-                Queue.AddBefore(i, item);
-                return;
-            }
+			{
+				Queue.AddBefore(i, item);
+				return;
+			}
 		}
-        Queue.AddLast(item);
+		Queue.AddLast(item);
 	}
 
-    public void Push(T item, int priority)
-    {
-        Push(new PQItem<T>
-        {
-            Data = item,
-            Priority = priority
-        });
-    }
+	public void Push(T item, int priority)
+	{
+		Push(new PQItem<T>
+		{
+			Data = item,
+			Priority = priority
+		});
+	}
 
-    public T Pop()
-    {
-        PQItem<T> head = Queue.First.Value;
-        Queue.RemoveFirst();
-        return head.Data;
-    }
+	public T Pop()
+	{
+		try
+		{
+			PQItem<T> head = Queue.First.Value;
+			Queue.RemoveFirst();
+			return head.Data;
+		}
+		catch (Exception x)
+		{
+			return default(T);
+		}
+	}
 
-    public T Peek()
-    {
-        return Queue.First.Value.Data;
-    }
+	public T Peek()
+	{
+		try
+		{
+			return Queue.First.Value.Data;
+		}
+		catch (Exception x)
+		{
+			return default(T);
+		}
+	}
 
-    public bool IsEmpty()
-    {
-        return Queue.Count == 0;
-    }
+	public bool IsEmpty()
+	{
+		return Queue.Count == 0;
+	}
 }
 
 public struct PQItem<T>
