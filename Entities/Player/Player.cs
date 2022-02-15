@@ -8,7 +8,8 @@ public class Player : Entity
 	Vector2 InitialPos = Vector2.Zero;
 	Vector2 Direction = Vector2.Zero;
 	Vector2 Heading = Vector2.Up;
-	Vector2 Buffer = Vector2.Zero;
+	Vector2[] Dirs = new Vector2[] { Vector2.Up, Vector2.Left, Vector2.Down, Vector2.Right };
+	Action BufferAction = Action.None;
 	bool BufferReady = true;
 	Action Action = Action.None;
 	int Frames = 0;
@@ -23,85 +24,63 @@ public class Player : Entity
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(float delta)
 	{
-		if (Frames == 0) BufferReady = true;
-		Vector2 buff = Vector2.Zero;
-		buff.x = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
-		buff.y = Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up");
-		if (buff != Vector2.Zero && BufferReady)
-		{
-			Buffer = buff;
-		}
-		else if (!BufferReady && buff == Vector2.Zero)
-		{
-			Buffer = Vector2.Zero;
-			BufferReady = true;
-		}
+		BufferAction = ParseInputDelta();
+
 		if (Frames == 0)
 		{
+			BufferAction = ParseInput();
 			Action = Action.None;
-			bool axial = false;
-			Direction.x = Buffer.x;
-			Direction.y = Buffer.y;
-			if (Mathf.Abs(Direction.x) >= Mathf.Abs(Direction.y) * 2 && Mathf.Abs(Direction.x) > 0)
+			switch (BufferAction)
 			{
-				Direction.y = 0;
-				axial = true;
-			}
-			if (Mathf.Abs(Direction.y) >= Mathf.Abs(Direction.x) * 2 && Mathf.Abs(Direction.y) > 0)
-			{
-				Direction.x = 0;
-				axial = true;
-			}
-			if (axial)
-			{
-				BufferReady = false;
-				Buffer = Vector2.Zero;
-				InitialPos = Position;
-				Direction = Direction.Normalized();
-				Heading = Direction.Normalized();
-				if (!IsAdjacentTileSolid(Direction))
-				{
-					Action = Action.Step;
-					Frames = 10;
-				}
-			}
-			else if (Input.IsActionPressed("jump"))
-			{
-				InitialPos = Position;
-				if (!IsAdjacentTileSolid(Heading * 2))
-				{
+				case Action.StepUp:
+				case Action.StepLeft:
+				case Action.StepDown:
+				case Action.StepRight:
+					InitialPos = Position;
+					Direction = Dirs[(int)BufferAction - 1];
+					Heading = Direction;
+					GD.Print("stepping");
+					if (!IsAdjacentTileSolid(Direction))
+					{
+						Action = BufferAction;
+						Frames = 10;
+					}
+					break;
+				case Action.LongJump:
+					InitialPos = Position;
+					if (!IsAdjacentTileSolid(Heading * 2))
+					{
+						Direction = Heading;
+						Action = Action.LongJump;
+						Frames = 32;
+					}
+					else if (!IsAdjacentTileSolid(Heading))
+					{
+						Direction = Heading / 2;
+						Action = Action.LongJump;
+						Frames = 32;
+					}
+					break;
+				case Action.TurnLeft:
+				case Action.TurnRight:
 					Direction = Heading;
-					Action = Action.LongJump;
-					Frames = 32;
-				}
-				else if (!IsAdjacentTileSolid(Heading))
-				{
-					Direction = Heading / 2;
-					Action = Action.LongJump;
-					Frames = 32;
-				}
+					Action = BufferAction;
+					Frames = 6;
+					break;
 			}
-			else if (Input.GetActionStrength("turn_left") > Input.GetActionStrength("turn_right"))
-			{
-				Direction = Heading;
-				Action = Action.TurnLeft;
-				Frames = 6;
-			}
-			else if (Input.GetActionStrength("turn_left") < Input.GetActionStrength("turn_right"))
-			{
-				Direction = Heading;
-				Action = Action.TurnRight;
-				Frames = 6;
-			}
-			// TODO: abilities
+			BufferAction = Action.None;
 		}
+
 		Frames--;
 		switch (Action)
 		{
 			case Action.None:
 				Frames = 0;
 				break;
-			case Action.Step:
+			case Action.StepUp:
+			case Action.StepLeft:
+			case Action.StepDown:
+			case Action.StepRight:
 				Position = InitialPos.LinearInterpolate(InitialPos + Direction * 24, (10 - Frames) / 10f);
 				break;
 			case Action.LongJump:
@@ -140,6 +119,40 @@ public class Player : Entity
 		}
 	}
 
+	private Action ParseInput()
+	{
+		if (Input.IsActionPressed("jump"))
+			return Action.LongJump;
+		if (Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			return Action.StepUp;
+		if (!Input.IsActionPressed("ui_up") && Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			return Action.StepLeft;
+		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			return Action.StepDown;
+		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && Input.IsActionPressed("ui_right"))
+			return Action.StepRight;
+		return BufferAction;
+	}
+
+	private Action ParseInputDelta()
+	{
+		if (Input.IsActionJustPressed("jump"))
+			return Action.LongJump;
+		if (Input.IsActionJustPressed("turn_left") && !Input.IsActionJustPressed("turn_right"))
+			return Action.TurnLeft;
+		if (!Input.IsActionJustPressed("turn_left") && Input.IsActionJustPressed("turn_right"))
+			return Action.TurnRight;
+		if (Input.IsActionJustPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			return Action.StepUp;
+		if (!Input.IsActionPressed("ui_up") && Input.IsActionJustPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			return Action.StepLeft;
+		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && Input.IsActionJustPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			return Action.StepDown;
+		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && Input.IsActionJustPressed("ui_right"))
+			return Action.StepRight;
+		return BufferAction;
+	}
+
 	private bool IsAdjacentTileSolid(Vector2 direction)
 	{
 		return GetWorld2d().DirectSpaceState.IntersectRay(GlobalPosition, GlobalPosition + (direction * 72), null, 1, false, true).Count > 0;
@@ -168,7 +181,10 @@ public class Player : Entity
 enum Action
 {
 	None,
-	Step,
+	StepUp,
+	StepLeft,
+	StepDown,
+	StepRight,
 	LongJump,
 	TurnLeft,
 	TurnRight,
