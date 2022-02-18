@@ -14,6 +14,7 @@ public class Player : Entity
 	Action Action = Action.None;
 	int Frames = 0;
 
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -39,7 +40,6 @@ public class Player : Entity
 					InitialPos = Position;
 					Direction = Dirs[(int)BufferAction - 1];
 					Heading = Direction;
-					GD.Print("stepping");
 					if (!IsAdjacentTileSolid(Direction))
 					{
 						Action = BufferAction;
@@ -101,20 +101,19 @@ public class Player : Entity
 				}
 				break;
 		}
-		switch ((int)Mathf.Rad2Deg(Heading.Angle()))
+		switch (((int)Mathf.Rad2Deg(Heading.Angle()) + 360) % 360)
 		{
 			case 0:
 				PlayerSprite.Animation = "RightIdle";
 				break;
-			case -90:
-				PlayerSprite.Animation = "UpIdle";
-				break;
-			case 180:
-			case -180:
-				PlayerSprite.Animation = "LeftIdle";
-				break;
 			case 90:
 				PlayerSprite.Animation = "DownIdle";
+				break;
+			case 180:
+				PlayerSprite.Animation = "LeftIdle";
+				break;
+			case 270:
+				PlayerSprite.Animation = "UpIdle";
 				break;
 		}
 	}

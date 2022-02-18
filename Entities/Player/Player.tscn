@@ -1,18 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/s_coil.png" type="Texture" id=2]
+[ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
-region = Rect2( 24, 0, 24, 32 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 0, 24, 32 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
@@ -22,18 +15,16 @@ region = Rect2( 72, 0, 24, 32 )
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 24, 32 )
 
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 24, 0, 24, 32 )
+
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 6 ) ],
-"loop": true,
-"name": "DownIdle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 5 ) ],
-"loop": true,
-"name": "UpIdle",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 7 ) ],
 "loop": true,
 "name": "LeftIdle",
@@ -42,6 +33,16 @@ animations = [ {
 "frames": [ SubResource( 8 ) ],
 "loop": true,
 "name": "RightIdle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "UpIdle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "DownIdle",
 "speed": 5.0
 } ]
 
@@ -57,6 +58,8 @@ shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="HUD" parent="Camera2D" instance=ExtResource( 3 )]
 
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -4 )
