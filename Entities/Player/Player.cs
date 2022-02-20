@@ -163,18 +163,17 @@ public class Player : Entity
 		switch (a.CollisionLayer)
 		{
 			case 8: // enemy
-					// TODO: kill player
+				// TODO: kill player
 				GD.Print("Enemy touched");
 				break;
 			case 16: // enemy line of sight
 				((Enemy)(a.GetParent().GetParent())).ChaseTarget = this;
-				GD.Print($"Spotted by {a.GetParent().GetParent().Name}");
 				break;
 			case 32: // pickup
 				a.GetParent().QueueFree();
 				if (a.GetParent().Name.Contains("Gem"))
 				{
-					Globals.Score += 100;
+					Globals.Score += Globals.GemScale;
 					Globals.Gems++;
 				}
 				break;
