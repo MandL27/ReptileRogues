@@ -171,7 +171,12 @@ public class Player : Entity
 				GD.Print($"Spotted by {a.GetParent().GetParent().Name}");
 				break;
 			case 32: // pickup
-					 // TODO: score, etc.
+				a.GetParent().QueueFree();
+				if (a.GetParent().Name.Contains("Gem"))
+				{
+					Globals.Score += 100;
+					Globals.Gems++;
+				}
 				break;
 		}
 	}

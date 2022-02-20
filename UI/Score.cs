@@ -34,7 +34,7 @@ public class Score : Node2D
 		}
 		if (updated)
 		{
-			string scoreStr = Globals.Score.ToString();
+			string scoreStr = ScoreRoll.ToString();
 			int len = 6 - scoreStr.Length;
 			for (int i = 0; i < 6; i++)
 			{
