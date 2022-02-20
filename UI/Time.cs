@@ -25,7 +25,7 @@ public class Time : Node2D
 		if (Globals.TimerActive)
 		{
 			Timer++;
-			TimeSpan span = new TimeSpan(0, 0, 0, 0, Timer * 1000 / 60);
+			TimeSpan span = new TimeSpan(0, 0, 0, 0, Timer * 50 / 3);
 			string timeStr = span.ToString(@"m\:ss\.ff");
 			if (span.TotalMinutes >= 10)
 			{
