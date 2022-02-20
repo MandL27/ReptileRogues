@@ -9,6 +9,7 @@ public class Enemy : Entity
 	[Export] Vector2[] PathVecs = new Vector2[2];
 	[Export] float Speed = 1;
 	[Export] EnemyType Type = EnemyType.Normal;
+	AnimatedSprite EnemySprite;
 	float SpeedRem = 0;
 	int CurrCell = 0;
 	int NextCell = 1;
@@ -23,10 +24,15 @@ public class Enemy : Entity
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		EnemySprite = GetNode<AnimatedSprite>("EnemySprite");
 		SightPivot = GetNode<Node2D>("Pivot");
 		if (Type == EnemyType.Normal)
 		{
 			SightPivot.GetNode<Area2D>("Sight").GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
+		}
+		else if (Type == EnemyType.Chase)
+		{
+			EnemySprite.Frames = GD.Load<SpriteFrames>("res://Entities/Enemy/EnemyChase.tres");
 		}
 		PathCells = new List<Vector2>();
 		Vector2 pos = GetTilePos();
@@ -110,6 +116,21 @@ public class Enemy : Entity
 			Position += Heading;
 		}
 		// TODO: homing
+		switch (((int)Mathf.Rad2Deg(Heading.Angle()) + 360) % 360)
+		{
+			case 0:
+				EnemySprite.Animation = "Right";
+				break;
+			case 90:
+				EnemySprite.Animation = "Down";
+				break;
+			case 180:
+				EnemySprite.Animation = "Left";
+				break;
+			case 270:
+				EnemySprite.Animation = "Up";
+				break;
+		}
 	}
 
 	bool IsInRange(Vector2 point)

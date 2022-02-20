@@ -40,7 +40,7 @@ public class PriorityQueue<T>
 			Queue.RemoveFirst();
 			return head.Data;
 		}
-		catch (Exception x)
+		catch
 		{
 			return default(T);
 		}
@@ -52,7 +52,7 @@ public class PriorityQueue<T>
 		{
 			return Queue.First.Value.Data;
 		}
-		catch (Exception x)
+		catch
 		{
 			return default(T);
 		}

@@ -4,7 +4,7 @@ using System;
 public class Score : Node2D
 {
 	// Declare member variables here.
-	int ScoreRoll = 0;
+	int ScoreRoll = -1;
 	AnimatedSprite[] Digits = new AnimatedSprite[6];
 
 	// Called when the node enters the scene tree for the first time.
@@ -34,10 +34,19 @@ public class Score : Node2D
 		}
 		if (updated)
 		{
-			string scoreStr = Globals.Score.ToString();
+			string scoreStr = ScoreRoll.ToString();
+			int len = 6 - scoreStr.Length;
 			for (int i = 0; i < 6; i++)
 			{
-				Digits[i].Animation = scoreStr.Substring(i, 1);
+				if (i - len >= 0)
+				{
+					Digits[i].Visible = true;
+					Digits[i].Animation = scoreStr.Substring(i - len, 1);
+				}
+				else
+				{
+					Digits[i].Visible = false;
+				}
 			}
 		}
 	}
