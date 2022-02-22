@@ -134,6 +134,7 @@ collision_mask = 161
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSprite/TonguePivot/TongueBody1"]
 shape = SubResource( 20 )
+disabled = true
 
 [node name="TongueBody2" type="Area2D" parent="PlayerSprite/TonguePivot"]
 position = Vector2( 48, 0 )
@@ -142,6 +143,7 @@ collision_mask = 161
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSprite/TonguePivot/TongueBody2"]
 shape = SubResource( 20 )
+disabled = true
 
 [node name="TongueBody3" type="Area2D" parent="PlayerSprite/TonguePivot"]
 position = Vector2( 72, 0 )
@@ -150,6 +152,7 @@ collision_mask = 161
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSprite/TonguePivot/TongueBody3"]
 shape = SubResource( 20 )
+disabled = true
 
 [connection signal="area_entered" from="Body" to="." method="OnBodyEntered"]
 [connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody1" to="." method="OnTongue1Entered"]
