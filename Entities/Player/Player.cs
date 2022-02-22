@@ -5,6 +5,8 @@ public class Player : Entity
 {
 	// Declare member variables here.
 	AnimatedSprite PlayerSprite;
+	Node2D TonguePivot;
+	AnimatedSprite TongueSprite;
 	Vector2 InitialPos = Vector2.Zero;
 	Vector2 Direction = Vector2.Zero;
 	Vector2 Heading = Vector2.Up;
@@ -13,6 +15,7 @@ public class Player : Entity
 	bool BufferReady = true;
 	Action Action = Action.None;
 	int Frames = 0;
+	int MaxTongueLength = 3;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -20,15 +23,20 @@ public class Player : Entity
 	{
 		base._Ready();
 		PlayerSprite = GetNode<AnimatedSprite>("PlayerSprite");
+		TonguePivot = PlayerSprite.GetNode<Node2D>("TonguePivot");
+		TongueSprite = TonguePivot.GetNode<AnimatedSprite>("TongueSprite");
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(float delta)
 	{
 		BufferAction = ParseInputDelta();
-
 		if (Frames == 0)
 		{
+			// reset tongue
+			TonguePivot.Visible = false;
+			TongueSprite.Playing = false;
+
 			BufferAction = ParseInput();
 			Action = Action.None;
 			switch (BufferAction)
@@ -67,9 +75,26 @@ public class Player : Entity
 					Action = BufferAction;
 					Frames = 6;
 					break;
+				case Action.CoilTongue:
+					TonguePivot.Rotation = Heading.Angle();
+					MaxTongueLength = 0;
+					for (int i = 1; i <= 3; i++)
+					{
+						if (IsAdjacentTileSolid(Heading * i))
+							break;
+						MaxTongueLength++;
+					}
+					TongueSprite.Frame = 0;
+					TonguePivot.Visible = true;
+
+					Action = Action.CoilTongue;
+					Frames = 30;
+					break;
 			}
 			BufferAction = Action.None;
 		}
+		if (Action != Action.CoilTongue)
+			MaxTongueLength = 3;
 
 		Frames--;
 		switch (Action)
@@ -100,7 +125,132 @@ public class Player : Entity
 					Heading.y = Direction.x;
 				}
 				break;
+			case Action.CoilTongue:
+				switch (MaxTongueLength)
+				{
+					case 0:
+						if (Frames >= 27)
+						{
+							TongueSprite.Frame = 0;
+							SetTongueCollision(0);
+						}
+						else
+						{
+							Frames = 0;
+						}
+						break;
+					case 1:
+						if (Frames >= 27)
+						{
+							TongueSprite.Frame = 0;
+							SetTongueCollision(0);
+						}
+						else if (Frames >= 24)
+						{
+							TongueSprite.Frame = 1;
+							SetTongueCollision(1);
+						}
+						else if (Frames >= 21)
+						{
+							TongueSprite.Frame = 9;
+							SetTongueCollision(0);
+						}
+						else
+						{
+							Frames = 0;
+						}
+						break;
+					case 2:
+						if (Frames >= 27)
+						{
+							TongueSprite.Frame = 0;
+							SetTongueCollision(0);
+						}
+						else if (Frames >= 24)
+						{
+							TongueSprite.Frame = 1;
+							SetTongueCollision(1);
+						}
+						else if (Frames >= 21)
+						{
+							TongueSprite.Frame = 2;
+							SetTongueCollision(2);
+						}
+						else if (Frames >= 18)
+						{
+							TongueSprite.Frame = 7;
+						}
+						else if (Frames >= 15)
+						{
+							TongueSprite.Frame = 8;
+							SetTongueCollision(1);
+						}
+						else if (Frames >= 12)
+						{
+							TongueSprite.Frame = 9;
+							SetTongueCollision(0);
+						}
+						else
+						{
+							Frames = 0;
+						}
+						break;
+					case 3:
+						if (Frames >= 27)
+						{
+							TongueSprite.Frame = 0;
+							SetTongueCollision(0);
+						}
+						else if (Frames >= 24)
+						{
+							TongueSprite.Frame = 1;
+							SetTongueCollision(1);
+						}
+						else if (Frames >= 21)
+						{
+							TongueSprite.Frame = 2;
+							SetTongueCollision(2);
+						}
+						else if (Frames >= 18)
+						{
+							TongueSprite.Frame = 3;
+							SetTongueCollision(3);
+						}
+						else if (Frames >= 15)
+						{
+							TongueSprite.Frame = 4;
+						}
+						else if (Frames >= 12)
+						{
+							TongueSprite.Frame = 5;
+						}
+						else if (Frames >= 9)
+						{
+							TongueSprite.Frame = 6;
+						}
+						else if (Frames >= 6)
+						{
+							TongueSprite.Frame = 7;
+							SetTongueCollision(2);
+						}
+						else if (Frames >= 3)
+						{
+							TongueSprite.Frame = 8;
+							SetTongueCollision(1);
+						}
+						else if (Frames >= 0)
+						{
+							TongueSprite.Frame = 9;
+							SetTongueCollision(0);
+						}
+						break;
+				}
+				break;
+			case Action.CoilTether:
+				Position = InitialPos.LinearInterpolate(InitialPos + Direction * 24, ((6 * Direction.Length()) - Frames) / (6 * Direction.Length()));
+				break;
 		}
+
 		switch (((int)Mathf.Rad2Deg(Heading.Angle()) + 360) % 360)
 		{
 			case 0:
@@ -118,6 +268,16 @@ public class Player : Entity
 		}
 	}
 
+	private void SetTongueCollision(int length)
+	{
+		for (int i = 1; i <= 3; i++)
+		{
+			TonguePivot.GetNode<Area2D>($"TongueBody{i}").GetNode<CollisionShape2D>("CollisionShape2D").Disabled = i > length;
+		}
+		GD.Print($"Length set to {length}");
+	}
+
+
 	private Action ParseInput()
 	{
 		if (Input.IsActionPressed("jump"))
@@ -130,6 +290,8 @@ public class Player : Entity
 			return Action.StepDown;
 		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && Input.IsActionPressed("ui_right"))
 			return Action.StepRight;
+		if (Input.IsActionPressed("action1"))
+			return Action.CoilTongue;
 		return BufferAction;
 	}
 
@@ -149,6 +311,8 @@ public class Player : Entity
 			return Action.StepDown;
 		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && Input.IsActionJustPressed("ui_right"))
 			return Action.StepRight;
+		if (Input.IsActionJustPressed("action1"))
+			return Action.CoilTongue;
 		return BufferAction;
 	}
 
@@ -163,7 +327,7 @@ public class Player : Entity
 		switch (a.CollisionLayer)
 		{
 			case 8: // enemy
-				// TODO: kill player
+					// TODO: kill player
 				GD.Print("Enemy touched");
 				break;
 			case 16: // enemy line of sight
@@ -178,6 +342,50 @@ public class Player : Entity
 				}
 				break;
 		}
+	}
+
+	private void OnTongueEntered(object area, int length)
+	{
+		Area2D a = (Area2D)area;
+		switch (a.CollisionLayer)
+		{
+			case 32: // pickup
+				a.GetParent().QueueFree();
+				if (a.GetParent().Name.Contains("Gem"))
+				{
+					Globals.Score += Globals.GemScale;
+					Globals.Gems++;
+				}
+				break;
+			case 128: // pole
+				if (MaxTongueLength >= length)
+				{
+					Direction = Heading * length;
+					Action = Action.CoilTether;
+					InitialPos = Position;
+					GD.Print($"Pole hit at {length}");
+					Frames = 6 * length;
+					MaxTongueLength = 0;
+					TongueSprite.Playing = true;
+					CallDeferred("SetTongueCollision", 0);
+				}
+				break;
+		}
+	}
+
+	private void OnTongue1Entered(object area)
+	{
+		OnTongueEntered(area, 1);
+	}
+
+	private void OnTongue2Entered(object area)
+	{
+		OnTongueEntered(area, 2);
+	}
+
+	private void OnTongue3Entered(object area)
+	{
+		OnTongueEntered(area, 3);
 	}
 }
 
@@ -197,5 +405,3 @@ enum Action
 	WatcherPush,
 	WatcherBite
 }
-
-

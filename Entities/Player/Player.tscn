@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/s_coil.png" type="Texture" id=2]
 [ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/s_tongue.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -15,13 +16,13 @@ region = Rect2( 0, 0, 24, 32 )
 atlas = ExtResource( 2 )
 region = Rect2( 48, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
-region = Rect2( 24, 0, 24, 32 )
-
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
 region = Rect2( 72, 0, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 24, 0, 24, 32 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -35,16 +36,67 @@ animations = [ {
 "name": "UpIdle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ) ],
-"loop": true,
-"name": "DownIdle",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 7 ) ],
 "loop": true,
 "name": "LeftIdle",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "DownIdle",
+"speed": 5.0
 } ]
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 4 )
+region = Rect2( 65, 0, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 4 )
+region = Rect2( 130, 0, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 4 )
+region = Rect2( 195, 0, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 4 )
+region = Rect2( 260, 0, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 24, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 4 )
+region = Rect2( 65, 24, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 4 )
+region = Rect2( 130, 24, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 4 )
+region = Rect2( 195, 24, 65, 24 )
+
+[sub_resource type="AtlasTexture" id=30]
+atlas = ExtResource( 4 )
+region = Rect2( 260, 24, 65, 24 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ) ],
+"loop": false,
+"name": "default",
+"speed": 20.0
+} ]
+
+[sub_resource type="CircleShape2D" id=20]
+radius = 7.0
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 1 )
@@ -64,6 +116,42 @@ current = true
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -4 )
 frames = SubResource( 4 )
-animation = "UpIdle"
+animation = "RightIdle"
+
+[node name="TonguePivot" type="Node2D" parent="PlayerSprite"]
+position = Vector2( 0, 4 )
+
+[node name="TongueSprite" type="AnimatedSprite" parent="PlayerSprite/TonguePivot"]
+position = Vector2( 41.5, 0 )
+z_index = -1
+frames = SubResource( 19 )
+frame = 4
+
+[node name="TongueBody1" type="Area2D" parent="PlayerSprite/TonguePivot"]
+position = Vector2( 24, 0 )
+collision_layer = 64
+collision_mask = 161
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSprite/TonguePivot/TongueBody1"]
+shape = SubResource( 20 )
+
+[node name="TongueBody2" type="Area2D" parent="PlayerSprite/TonguePivot"]
+position = Vector2( 48, 0 )
+collision_layer = 64
+collision_mask = 161
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSprite/TonguePivot/TongueBody2"]
+shape = SubResource( 20 )
+
+[node name="TongueBody3" type="Area2D" parent="PlayerSprite/TonguePivot"]
+position = Vector2( 72, 0 )
+collision_layer = 64
+collision_mask = 161
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSprite/TonguePivot/TongueBody3"]
+shape = SubResource( 20 )
 
 [connection signal="area_entered" from="Body" to="." method="OnBodyEntered"]
+[connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody1" to="." method="OnTongue1Entered"]
+[connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody2" to="." method="OnTongue2Entered"]
+[connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody3" to="." method="OnTongue3Entered"]
