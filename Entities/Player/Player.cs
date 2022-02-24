@@ -16,6 +16,8 @@ public class Player : Entity
 	Action Action = Action.None;
 	int Frames = 0;
 	int MaxTongueLength = 3;
+	bool Invisible = false;
+	int InvisFrames = 0;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -30,6 +32,15 @@ public class Player : Entity
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(float delta)
 	{
+		if (InvisFrames == 0 && Invisible)
+		{
+			Invisible = false;
+			InvisFrames = 20 * 60;
+			PlayerSprite.Modulate = new Godot.Color(1, 1, 1, 1);
+		}
+		if (InvisFrames > 0)
+			InvisFrames--;
+
 		BufferAction = ParseInputDelta();
 		if (Frames == 0)
 		{
@@ -89,6 +100,14 @@ public class Player : Entity
 
 					Action = Action.CoilTongue;
 					Frames = 30;
+					break;
+				case Action.CoilInvis:
+					if (InvisFrames == 0 && !Invisible)
+					{
+						Invisible = true;
+						InvisFrames = 600;
+						PlayerSprite.Modulate = new Godot.Color(1, 1, 1, 0.5f);
+					}
 					break;
 			}
 			BufferAction = Action.None;
@@ -292,6 +311,8 @@ public class Player : Entity
 			return Action.StepRight;
 		if (Input.IsActionPressed("action1"))
 			return Action.CoilTongue;
+		if (Input.IsActionPressed("action2"))
+			return Action.CoilInvis;
 		return BufferAction;
 	}
 
@@ -313,6 +334,8 @@ public class Player : Entity
 			return Action.StepRight;
 		if (Input.IsActionJustPressed("action1"))
 			return Action.CoilTongue;
+		if (Input.IsActionJustPressed("action2"))
+			return Action.CoilInvis;
 		return BufferAction;
 	}
 
@@ -331,7 +354,8 @@ public class Player : Entity
 				GD.Print("Enemy touched");
 				break;
 			case 16: // enemy line of sight
-				((Enemy)(a.GetParent().GetParent())).ChaseTarget = this;
+				if (!Invisible)
+					((Enemy)(a.GetParent().GetParent())).ChaseTarget = this;
 				break;
 			case 32: // pickup
 				a.GetParent().QueueFree();
