@@ -293,7 +293,6 @@ public class Player : Entity
 		{
 			TonguePivot.GetNode<Area2D>($"TongueBody{i}").GetNode<CollisionShape2D>("CollisionShape2D").Disabled = i > length;
 		}
-		GD.Print($"Length set to {length}");
 	}
 
 
@@ -387,7 +386,6 @@ public class Player : Entity
 					Direction = Heading * length;
 					Action = Action.CoilTether;
 					InitialPos = Position;
-					GD.Print($"Pole hit at {length}");
 					Frames = 6 * length;
 					MaxTongueLength = 0;
 					TongueSprite.Playing = true;
