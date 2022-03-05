@@ -15,5 +15,6 @@ public class Globals : Node2D
                            600;
     }
     public static int RollSpeed = 10;
-    public static bool TimerActive = true;
+    public static bool TimerActive = false;
+    public static int TimerPauseFrames = 120;
 }

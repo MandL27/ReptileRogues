@@ -12,17 +12,17 @@ radius = 5.0
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
-region = Rect2( 48, 0, 24, 32 )
+region = Rect2( 24, 0, 24, 32 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 2 )
 region = Rect2( 72, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
-region = Rect2( 24, 0, 24, 32 )
+region = Rect2( 48, 0, 24, 32 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -31,9 +31,9 @@ animations = [ {
 "name": "RightIdle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 6 ) ],
 "loop": true,
-"name": "UpIdle",
+"name": "DownIdle",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 7 ) ],
@@ -41,9 +41,9 @@ animations = [ {
 "name": "LeftIdle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ) ],
+"frames": [ SubResource( 5 ) ],
 "loop": true,
-"name": "DownIdle",
+"name": "UpIdle",
 "speed": 5.0
 } ]
 
@@ -116,16 +116,16 @@ current = true
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -4 )
 frames = SubResource( 4 )
-animation = "RightIdle"
+animation = "UpIdle"
 
 [node name="TonguePivot" type="Node2D" parent="PlayerSprite"]
+visible = false
 position = Vector2( 0, 4 )
 
 [node name="TongueSprite" type="AnimatedSprite" parent="PlayerSprite/TonguePivot"]
 position = Vector2( 41.5, 0 )
 z_index = -1
 frames = SubResource( 19 )
-frame = 4
 
 [node name="TongueBody1" type="Area2D" parent="PlayerSprite/TonguePivot"]
 position = Vector2( 24, 0 )

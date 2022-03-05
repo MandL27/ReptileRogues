@@ -36,5 +36,13 @@ public class Time : Node2D
 				Digits[i].Animation = timeStr.Substring(i, 1);
 			}
 		}
+		else
+		{
+			Globals.TimerPauseFrames--;
+			if (Globals.TimerPauseFrames < 0)
+			{
+				Globals.TimerActive = true;
+			}
+		}
 	}
 }
