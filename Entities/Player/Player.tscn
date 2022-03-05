@@ -103,7 +103,7 @@ script = ExtResource( 1 )
 
 [node name="Body" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 56
+collision_mask = 58
 
 [node name="Collider" type="CollisionShape2D" parent="Body"]
 shape = SubResource( 1 )
@@ -155,6 +155,7 @@ shape = SubResource( 20 )
 disabled = true
 
 [connection signal="area_entered" from="Body" to="." method="OnBodyEntered"]
+[connection signal="area_exited" from="Body" to="." method="OnBodyExited"]
 [connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody1" to="." method="OnTongue1Entered"]
 [connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody2" to="." method="OnTongue2Entered"]
 [connection signal="area_entered" from="PlayerSprite/TonguePivot/TongueBody3" to="." method="OnTongue3Entered"]

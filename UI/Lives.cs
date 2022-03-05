@@ -17,6 +17,8 @@ public class Lives : Node2D
 	public override void _PhysicsProcess(float delta)
 	{
 		string lifeStr = Globals.Lives.ToString().PadLeft(2, '0');
+		if (Globals.Lives < 0)
+			lifeStr = "00";
 		for (int i = 0; i < 2; i++)
 		{
 				Digits[i].Animation = lifeStr.Substring(i, 1);

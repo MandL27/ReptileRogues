@@ -20,6 +20,7 @@ public class Player : Entity
 	bool Invisible = false;
 	int InvisFrames = 0;
 	int PauseFrames = 120;
+	bool OverWater = false;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -38,6 +39,21 @@ public class Player : Entity
 		if (PauseFrames > 0)
 		{
 			PauseFrames--;
+			if (PauseFrames == 60)
+			{
+				GlobalPosition = SpawnPos;
+			}
+		}
+		else if (OverWater && Action == Action.None)
+		{
+			PauseFrames = 180;
+			Globals.Lives--;
+			if (Globals.Lives < 0)
+			{
+				Globals.TimerActive = false;
+				Globals.TimerPauseFrames = int.MaxValue;
+				PauseFrames = int.MaxValue;
+			}
 		}
 		else
 		{
@@ -358,9 +374,21 @@ public class Player : Entity
 		Area2D a = (Area2D)area;
 		switch (a.CollisionLayer)
 		{
+			case 2: // water
+				OverWater = true;
+				break;
 			case 8: // enemy
-					// TODO: kill player
-				GD.Print("Enemy touched");
+				if (PauseFrames == 0)
+				{
+					PauseFrames = 180;
+					Globals.Lives--;
+					if (Globals.Lives < 0)
+					{
+						Globals.TimerActive = false;
+						Globals.TimerPauseFrames = int.MaxValue;
+						PauseFrames = int.MaxValue;
+					}
+				}
 				break;
 			case 16: // enemy line of sight
 				if (!Invisible)
@@ -373,6 +401,20 @@ public class Player : Entity
 					Globals.Score += Globals.GemScale;
 					Globals.Gems++;
 				}
+				break;
+			case 256: // checkpoint
+				SpawnPos = a.GlobalPosition;
+				break;
+		}
+	}
+
+	private void OnBodyExited(object area)
+	{
+		Area2D a = (Area2D)area;
+		switch (a.CollisionLayer)
+		{
+			case 2: // water
+				OverWater = false;
 				break;
 		}
 	}
