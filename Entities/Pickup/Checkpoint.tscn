@@ -1,7 +1,62 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Entities/Base/Entity.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Pickup/Checkpoint.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/s_flag.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 24, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 24, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 48, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 48, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 48, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 24, 24, 24 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "Off",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "On",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "OnStart",
+"speed": 10.0
+} ]
 
 [node name="Checkpoint" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -9,3 +64,8 @@ script = ExtResource( 2 )
 [node name="Body" parent="." index="0"]
 collision_layer = 256
 collision_mask = 4
+
+[node name="Flag" type="AnimatedSprite" parent="." index="1"]
+position = Vector2( 0, -4 )
+frames = SubResource( 2 )
+animation = "Off"

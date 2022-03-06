@@ -404,6 +404,7 @@ public class Player : Entity
 				break;
 			case 256: // checkpoint
 				SpawnPos = a.GlobalPosition;
+				a.GetParent<Checkpoint>().Activate();
 				break;
 		}
 	}
