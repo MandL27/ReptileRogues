@@ -46,6 +46,7 @@ public class Player : Entity
 			int i = FadeFrames;
 			if (!FadingIn) i = 30 - i;
 			FadeRect.Color = new Color((int)FadeColors[i]);
+			if (PauseFrames > 180 && FadeFrames == 0) System.Environment.Exit(0);
 		}
 		if (PauseFrames > 0)
 		{
@@ -64,17 +65,6 @@ public class Player : Entity
 			if (PauseFrames == 31)
 			{
 				FadeIn();
-			}
-		}
-		else if (OverWater && Action == Action.None)
-		{
-			PauseFrames = 180;
-			Globals.Lives--;
-			if (Globals.Lives < 0)
-			{
-				Globals.TimerActive = false;
-				Globals.TimerPauseFrames = int.MaxValue;
-				PauseFrames = int.MaxValue;
 			}
 		}
 		else
@@ -97,6 +87,16 @@ public class Player : Entity
 
 				BufferAction = ParseInput();
 				Action = Action.None;
+				if (OverWater)
+				{
+					PauseFrames = 180;
+					Globals.Lives--;
+					if (Globals.Lives < 0)
+					{
+						Globals.TimerActive = false;
+						Globals.TimerPauseFrames = int.MaxValue;
+					}
+				}
 				switch (BufferAction)
 				{
 					case Action.StepUp:
@@ -390,6 +390,7 @@ public class Player : Entity
 	{
 		FadingIn = false;
 		FadeFrames = 31;
+		if (Globals.Lives < 0) PauseFrames = int.MaxValue;
 	}
 
 	private void FadeIn()
@@ -420,7 +421,6 @@ public class Player : Entity
 					{
 						Globals.TimerActive = false;
 						Globals.TimerPauseFrames = int.MaxValue;
-						PauseFrames = int.MaxValue;
 					}
 				}
 				break;
