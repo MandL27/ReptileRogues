@@ -22,6 +22,8 @@ public class Player : Entity
 	int InvisFrames = 0;
 	int PauseFrames = 120;
 	bool OverWater = false;
+	bool OverGoal = false;
+	PackedScene SCScene;
 	bool FadingIn = false;
 	int FadeFrames = 0;
 	uint[] FadeColors = new uint[] { 0x000000FF, 0x080808FF, 0x101010FF, 0x181818FF, 0x202020FF, 0x282828FF, 0x303030FF, 0x383838FF, 0x404040FF, 0x484848FF, 0x505050FF, 0x585858FF, 0x606060FF, 0x686868FF, 0x707070FF, 0x787878FF, 0x808080FF, 0x888888FF, 0x909090FF, 0x989898FF, 0xA0A0A0FF, 0xA8A8A8FF, 0xB0B0B0FF, 0xB8B8B8FF, 0xC0C0C0FF, 0xC8C8C8FF, 0xD0D0D0FF, 0xD8D8D8FF, 0xE0E0E0FF, 0xE8E8E8FF, 0xF0F0F0FF, 0xF8F8F8FF };
@@ -35,6 +37,7 @@ public class Player : Entity
 		TongueSprite = TonguePivot.GetNode<AnimatedSprite>("TongueSprite");
 		FadeRect = GetNode<Camera2D>("Camera2D").GetNode<Node2D>("HUD").GetNode<ColorRect>("ColorRect");
 		SpawnPos = GlobalPosition;
+		SCScene = GD.Load<PackedScene>("res://UI/StageComplete.tscn");
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
@@ -54,18 +57,22 @@ public class Player : Entity
 			Action = Action.None;
 			BufferAction = Action.None;
 			InitialPos = Vector2.Zero;
-			if (PauseFrames == 121)
+			if (PauseFrames == 121 && !OverGoal)
 			{
 				FadeOut();
 			}
-			if (PauseFrames == 60)
+			if (PauseFrames == 60 && !OverGoal)
 			{
 				GlobalPosition = SpawnPos;
 			}
-			if (PauseFrames == 31)
+			if (PauseFrames == 31 && !OverGoal)
 			{
 				FadeIn();
 			}
+		}
+		else if (PauseFrames == 0 && Globals.TimerActive == false && OverGoal)
+		{
+			System.Environment.Exit(0);
 		}
 		else
 		{
@@ -96,6 +103,14 @@ public class Player : Entity
 						Globals.TimerActive = false;
 						Globals.TimerPauseFrames = int.MaxValue;
 					}
+				}
+				if (OverGoal)
+				{
+					PauseFrames = 240;
+					Globals.TimerActive = false;
+					Globals.TimerPauseFrames = int.MaxValue;
+					Node2D node = SCScene.Instance<Node2D>();
+					AddChild(node);
 				}
 				switch (BufferAction)
 				{
@@ -440,6 +455,9 @@ public class Player : Entity
 				SpawnPos = a.GlobalPosition;
 				a.GetParent<Checkpoint>().Activate();
 				break;
+			case 512: // goal
+				OverGoal = true;
+				break;
 		}
 	}
 
@@ -450,6 +468,9 @@ public class Player : Entity
 		{
 			case 2: // water
 				OverWater = false;
+				break;
+			case 512: // goal
+				OverGoal = false;
 				break;
 		}
 	}

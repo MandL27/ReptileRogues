@@ -1,0 +1,97 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UI/HUDNumber.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://UI/SCText.cs" type="Script" id=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -78, -48 )
+z_index = 400
+frames = ExtResource( 1 )
+animation = "S"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+position = Vector2( -66, -48 )
+z_index = 399
+frames = ExtResource( 1 )
+animation = "T"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite3" type="AnimatedSprite" parent="."]
+position = Vector2( -54, -48 )
+z_index = 398
+frames = ExtResource( 1 )
+animation = "A"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite4" type="AnimatedSprite" parent="."]
+position = Vector2( -42, -48 )
+z_index = 397
+frames = ExtResource( 1 )
+animation = "G"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite5" type="AnimatedSprite" parent="."]
+position = Vector2( -30, -48 )
+z_index = 396
+frames = ExtResource( 1 )
+animation = "E"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite6" type="AnimatedSprite" parent="."]
+position = Vector2( -6, -48 )
+z_index = 395
+frames = ExtResource( 1 )
+animation = "C"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite7" type="AnimatedSprite" parent="."]
+position = Vector2( 6, -48 )
+z_index = 394
+frames = ExtResource( 1 )
+animation = "O"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite8" type="AnimatedSprite" parent="."]
+position = Vector2( 18, -48 )
+z_index = 393
+frames = ExtResource( 1 )
+animation = "M"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite9" type="AnimatedSprite" parent="."]
+position = Vector2( 30, -48 )
+z_index = 392
+frames = ExtResource( 1 )
+animation = "P"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite10" type="AnimatedSprite" parent="."]
+position = Vector2( 42, -48 )
+z_index = 391
+frames = ExtResource( 1 )
+animation = "L"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite11" type="AnimatedSprite" parent="."]
+position = Vector2( 54, -48 )
+z_index = 390
+frames = ExtResource( 1 )
+animation = "E"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite12" type="AnimatedSprite" parent="."]
+position = Vector2( 66, -48 )
+z_index = 389
+frames = ExtResource( 1 )
+animation = "T"
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite13" type="AnimatedSprite" parent="."]
+position = Vector2( 78, -48 )
+z_index = 388
+frames = ExtResource( 1 )
+animation = "E"
+script = ExtResource( 2 )
