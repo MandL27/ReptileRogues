@@ -12,10 +12,6 @@ radius = 5.0
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 0, 24, 32 )
-
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
 region = Rect2( 24, 0, 24, 32 )
@@ -24,16 +20,15 @@ region = Rect2( 24, 0, 24, 32 )
 atlas = ExtResource( 2 )
 region = Rect2( 72, 0, 24, 32 )
 
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 24, 32 )
+
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ SubResource( 8 ) ],
 "loop": true,
 "name": "RightIdle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 5 ) ],
-"loop": true,
-"name": "UpIdle",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 6 ) ],
@@ -44,6 +39,11 @@ animations = [ {
 "frames": [ SubResource( 7 ) ],
 "loop": true,
 "name": "LeftIdle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "UpIdle",
 "speed": 5.0
 } ]
 

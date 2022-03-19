@@ -26,6 +26,7 @@ public class Player : Entity
 	PackedScene SCScene;
 	bool FadingIn = false;
 	int FadeFrames = 0;
+	bool Held = false;
 	uint[] FadeColors = new uint[] { 0x000000FF, 0x080808FF, 0x101010FF, 0x181818FF, 0x202020FF, 0x282828FF, 0x303030FF, 0x383838FF, 0x404040FF, 0x484848FF, 0x505050FF, 0x585858FF, 0x606060FF, 0x686868FF, 0x707070FF, 0x787878FF, 0x808080FF, 0x888888FF, 0x909090FF, 0x989898FF, 0xA0A0A0FF, 0xA8A8A8FF, 0xB0B0B0FF, 0xB8B8B8FF, 0xC0C0C0FF, 0xC8C8C8FF, 0xD0D0D0FF, 0xD8D8D8FF, 0xE0E0E0FF, 0xE8E8E8FF, 0xF0F0F0FF, 0xF8F8F8FF };
 
 	// Called when the node enters the scene tree for the first time.
@@ -121,7 +122,7 @@ public class Player : Entity
 						InitialPos = Position;
 						Direction = Dirs[(int)BufferAction - 1];
 						Heading = Direction;
-						if (!IsAdjacentTileSolid(Direction))
+						if (!IsAdjacentTileSolid(Direction) && !(Held && IsAdjacentTileSolid(Direction, 2)))
 						{
 							Action = BufferAction;
 							Frames = 10;
@@ -173,6 +174,7 @@ public class Player : Entity
 						break;
 				}
 				BufferAction = Action.None;
+				Held = false;
 			}
 			if (Action != Action.CoilTongue)
 				MaxTongueLength = 3;
@@ -361,21 +363,24 @@ public class Player : Entity
 
 	private Action ParseInput()
 	{
+		Action ret = Action.None;
 		if (Input.IsActionPressed("jump"))
-			return Action.LongJump;
-		if (Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
-			return Action.StepUp;
-		if (!Input.IsActionPressed("ui_up") && Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
-			return Action.StepLeft;
-		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
-			return Action.StepDown;
-		if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && Input.IsActionPressed("ui_right"))
-			return Action.StepRight;
-		if (Input.IsActionPressed("action1"))
-			return Action.CoilTongue;
-		if (Input.IsActionPressed("action2"))
-			return Action.CoilInvis;
-		return BufferAction;
+			ret = Action.LongJump;
+		else if (Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			ret = Action.StepUp;
+		else if (!Input.IsActionPressed("ui_up") && Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			ret = Action.StepLeft;
+		else if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && Input.IsActionPressed("ui_down") && !Input.IsActionPressed("ui_right"))
+			ret = Action.StepDown;
+		else if (!Input.IsActionPressed("ui_up") && !Input.IsActionPressed("ui_left") && !Input.IsActionPressed("ui_down") && Input.IsActionPressed("ui_right"))
+			ret = Action.StepRight;
+		else if (Input.IsActionPressed("action1"))
+			ret = Action.CoilTongue;
+		else if (Input.IsActionPressed("action2"))
+			ret = Action.CoilInvis;
+		Held = ret != BufferAction;
+		if (ret == Action.None) return BufferAction;
+		return ret;
 	}
 
 	private Action ParseInputDelta()
@@ -414,9 +419,14 @@ public class Player : Entity
 		FadeFrames = 31;
 	}
 
+	private bool IsAdjacentTileSolid(Vector2 direction, uint mask)
+	{
+		return GetWorld2d().DirectSpaceState.IntersectRay(GlobalPosition, GlobalPosition + (direction * 72), null, mask, false, true).Count > 0;
+	}
+
 	private bool IsAdjacentTileSolid(Vector2 direction)
 	{
-		return GetWorld2d().DirectSpaceState.IntersectRay(GlobalPosition, GlobalPosition + (direction * 72), null, 1, false, true).Count > 0;
+		return IsAdjacentTileSolid(direction, 1);
 	}
 
 	private void OnBodyEntered(object area)
