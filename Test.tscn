@@ -101,7 +101,6 @@ Speed = 0.875
 position = Vector2( 360, -936 )
 z_index = 4
 PathVecs = PoolVector2Array( 0, 4, 0, -4 )
-Type = 1
 
 [node name="Enemy14" parent="Enemies" instance=ExtResource( 2 )]
 position = Vector2( 360, -888 )
