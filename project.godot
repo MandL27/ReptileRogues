@@ -102,6 +102,11 @@ action2={
 2d_physics/layer_4="Enemy"
 2d_physics/layer_5="EnemySight"
 2d_physics/layer_6="Pickup"
+2d_physics/layer_7="Tongue"
+2d_physics/layer_8="Pole"
+2d_physics/layer_9="Checkpoint"
+2d_physics/layer_10="Goal"
+2d_physics/layer_11="Switch"
 
 [physics]
 

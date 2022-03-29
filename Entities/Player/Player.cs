@@ -334,21 +334,38 @@ public class Player : Entity
 					break;
 			}
 
+			string anim = "";
 			switch (((int)Mathf.Rad2Deg(Heading.Angle()) + 360) % 360)
 			{
 				case 0:
-					PlayerSprite.Animation = "RightIdle";
+					anim = "Right";
 					break;
 				case 90:
-					PlayerSprite.Animation = "DownIdle";
+					anim = "Down";
 					break;
 				case 180:
-					PlayerSprite.Animation = "LeftIdle";
+					anim = "Left";
 					break;
 				case 270:
-					PlayerSprite.Animation = "UpIdle";
+					anim = "Up";
 					break;
 			}
+			switch (Action)
+			{
+				case Action.StepUp:
+				case Action.StepDown:
+				case Action.StepLeft:
+				case Action.StepRight:
+					anim += "Step";
+					break;
+				case Action.LongJump:
+					anim += "Jump";
+					break;
+				default:
+					anim += "Idle";
+					break;
+			}
+			PlayerSprite.Animation = anim;
 		}
 	}
 
@@ -485,7 +502,7 @@ public class Player : Entity
 		}
 	}
 
-	private void OnTongueEntered(object area, int length)
+	private async void OnTongueEntered(object area, int length)
 	{
 		Area2D a = (Area2D)area;
 		switch (a.CollisionLayer)
@@ -509,6 +526,9 @@ public class Player : Entity
 					TongueSprite.Playing = true;
 					CallDeferred("SetTongueCollision", 0);
 				}
+				break;
+			case 1024: // switch
+				a.GetParent<Switch>().Activate();
 				break;
 		}
 	}

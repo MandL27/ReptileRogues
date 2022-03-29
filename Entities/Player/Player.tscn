@@ -1,50 +1,154 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Entities/Player/Player.cs" type="Script" id=1]
-[ext_resource path="res://Sprites/s_coil.png" type="Texture" id=2]
 [ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/s_tongue.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/coil.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
 
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 32, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 64, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 96, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 5 )
+region = Rect2( 72, 32, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 5 )
+region = Rect2( 24, 64, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 64, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 64, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 5 )
 region = Rect2( 24, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 0, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 5 )
+region = Rect2( 24, 96, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 96, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 96, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 5 )
+region = Rect2( 72, 96, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 5 )
+region = Rect2( 72, 64, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 5 )
 region = Rect2( 72, 0, 24, 32 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
-region = Rect2( 48, 0, 24, 32 )
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 5 )
+region = Rect2( 24, 32, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 32, 24, 32 )
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 5 )
+region = Rect2( 48, 32, 24, 32 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 8 ) ],
-"loop": true,
-"name": "RightIdle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 6 ) ],
+"frames": [ SubResource( 31 ) ],
 "loop": true,
 "name": "DownIdle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 7 ) ],
+"frames": [ SubResource( 34 ) ],
+"loop": true,
+"name": "UpIdle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 33 ) ],
+"loop": true,
+"name": "RightIdle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 32 ) ],
 "loop": true,
 "name": "LeftIdle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 50 ) ],
 "loop": true,
-"name": "UpIdle",
+"name": "DownJump",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 41 ), SubResource( 42 ), SubResource( 43 ), SubResource( 42 ) ],
+"loop": true,
+"name": "UpStep",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 39 ) ],
+"loop": true,
+"name": "RightStep",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 45 ) ],
+"loop": true,
+"name": "LeftStep",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 48 ) ],
+"loop": true,
+"name": "LeftJump",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 47 ) ],
+"loop": true,
+"name": "UpJump",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 49 ) ],
+"loop": true,
+"name": "RightJump",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 36 ) ],
+"loop": true,
+"name": "DownStep",
+"speed": 10.0
 } ]
 
 [sub_resource type="AtlasTexture" id=21]
@@ -116,7 +220,8 @@ current = true
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -4 )
 frames = SubResource( 4 )
-animation = "UpIdle"
+animation = "DownJump"
+playing = true
 
 [node name="TonguePivot" type="Node2D" parent="PlayerSprite"]
 visible = false
