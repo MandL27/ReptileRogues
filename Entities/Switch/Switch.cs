@@ -4,7 +4,9 @@ using System;
 public class Switch : Entity
 {
 	// Declare member variables here.
+	[Export] Node2D DoorNode;
 	AnimatedSprite SwitchSprite;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -22,6 +24,6 @@ public class Switch : Entity
 	{
 		Area.QueueFree();
 		SwitchSprite.Playing = true;
-
+		DoorNode.QueueFree();
 	}
 }
