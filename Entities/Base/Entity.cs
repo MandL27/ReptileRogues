@@ -27,4 +27,9 @@ public class Entity : Node2D
 	{
 		return Position.x % 24 == 0 && Position.y % 24 == 0;
 	}
+
+	protected bool IsTileSolid(Vector2 tile)
+	{
+		return GetWorld2d().DirectSpaceState.IntersectPoint((tile * 24 * GetParent<Node2D>().GetParent<Node2D>().Scale) + GetParent<Node2D>().Position, 32, null, 1, false, true).Count > 0;
+	}
 }

@@ -155,9 +155,10 @@ public class Enemy : Entity
 			Vector2 node = queue.Pop();
 			foreach (Vector2 dir in new Vector2[] { Vector2.Up, Vector2.Down, Vector2.Left, Vector2.Right })
 			{
-				// TODO: occlude on walls and water(?)
 				Vector2 next = node + dir;
 				if (visited.ContainsKey(next)) continue;
+				visited[next] = null;
+				if (IsTileSolid(next)) continue;
 				LinkedList<Vector2> list = new LinkedList<Vector2>(visited[node]);
 				list.AddLast(node);
 				if (next == target)
