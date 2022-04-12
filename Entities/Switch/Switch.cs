@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public class Switch : Entity
@@ -24,6 +25,7 @@ public class Switch : Entity
 	{
 		Area.QueueFree();
 		SwitchSprite.Playing = true;
-		DoorNode.QueueFree();
+		//DoorNode.QueueFree();
+		GetNode<Node2D>("Door").QueueFree();
 	}
 }

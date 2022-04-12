@@ -485,6 +485,9 @@ public class Player : Entity
 			case 512: // goal
 				OverGoal = true;
 				break;
+			case 1024: // switch
+				a.GetParent<Switch>().Activate();
+				break;
 		}
 	}
 
