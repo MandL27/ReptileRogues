@@ -122,7 +122,7 @@ public class Player : Entity
 						InitialPos = Position;
 						Direction = Dirs[(int)BufferAction - 1];
 						Heading = Direction;
-						if (!IsAdjacentTileSolid(Direction) && !(Held && IsAdjacentTileSolid(Direction, 2)))
+						if (!IsAdjacentTileSolid(Direction, 3))
 						{
 							Action = BufferAction;
 							Frames = 10;
