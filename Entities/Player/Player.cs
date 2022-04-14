@@ -20,7 +20,7 @@ public class Player : Entity
 	int MaxTongueLength = 3;
 	bool Invisible = false;
 	int InvisFrames = 0;
-	int PauseFrames = 120;
+	public int PauseFrames = 120;
 	bool OverWater = false;
 	bool OverGoal = false;
 	PackedScene SCScene;

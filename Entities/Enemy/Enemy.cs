@@ -70,7 +70,14 @@ public class Enemy : Entity
 		SpeedRem += Speed;
 		if (ChaseTarget != null)
 		{
-			SpeedRem += Speed / 2; // 1.5x speed in chase mode
+			if (((Player)ChaseTarget).PauseFrames > 0)
+			{
+				ChaseTarget = null;
+			}
+			else
+			{
+				SpeedRem += Speed / 2; // 1.5x speed in chase mode
+			}
 		}
 		while (SpeedRem >= 1)
 		{
@@ -89,7 +96,16 @@ public class Enemy : Entity
 						ChaseTarget = null;
 						Heading *= -1;
 						ReturnQueue = FindAStarPath(PathCells[CurrCell]);
-						Heading = ReturnQueue.ElementAt(1) - GetTilePos();
+						try
+						{
+							Heading = ReturnQueue.ElementAt(1) - GetTilePos();
+						}
+						catch (ArgumentOutOfRangeException x)
+						{
+							GD.Print("oop");
+							ReturnQueue.Clear();
+							Heading = PathCells[NextCell] - PathCells[CurrCell];
+						}
 					}
 				}
 				else if (GetTilePos() == PathCells[CurrCell])
@@ -110,6 +126,24 @@ public class Enemy : Entity
 					ReturnQueue.RemoveFirst();
 					ReturnQueue = FindAStarPath(PathCells[CurrCell]);
 					Heading = ReturnQueue.ElementAt(1) - GetTilePos();
+				}
+				else
+				{
+					int i = NextCell;
+					while (i != CurrCell)
+					{
+						Vector2 cell = PathCells[i];
+						if (GetTilePos() == cell)
+						{
+							CurrCell = i;
+							NextCell = i + 1;
+							if (NextCell == PathCells.Count) NextCell = 0;
+							Heading = PathCells[NextCell] - PathCells[CurrCell];
+							Heading = PathCells[NextCell] - PathCells[CurrCell];
+						}
+						i++;
+						if (i == PathCells.Count) i = 0;
+					}
 				}
 				SightPivot.Rotation = Heading.Angle();
 			}
