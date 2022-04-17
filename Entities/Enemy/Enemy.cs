@@ -70,7 +70,13 @@ public class Enemy : Entity
 		SpeedRem += Speed;
 		if (ChaseTarget != null)
 		{
-			if (((Player)ChaseTarget).PauseFrames > 0)
+			if (((Player)ChaseTarget).PauseFrames == 1)
+			{
+				CurrCell = 0;
+				NextCell = 1;
+				Position = PathCells[0] * 24;
+			}
+			else if (((Player)ChaseTarget).PauseFrames > 0)
 			{
 				ChaseTarget = null;
 			}
@@ -146,6 +152,11 @@ public class Enemy : Entity
 					}
 				}
 				SightPivot.Rotation = Heading.Angle();
+				if (IsTileSolid(GetTilePos() + Heading, 3))
+				{
+					Heading *= -1;
+					GD.Print("oops");
+				}
 			}
 			Position += Heading;
 		}
@@ -192,7 +203,7 @@ public class Enemy : Entity
 				Vector2 next = node + dir;
 				if (visited.ContainsKey(next)) continue;
 				visited[next] = null;
-				if (IsTileSolid(next)) continue;
+				if (IsTileSolid(next, 3)) continue;
 				LinkedList<Vector2> list = new LinkedList<Vector2>(visited[node]);
 				list.AddLast(node);
 				if (next == target)

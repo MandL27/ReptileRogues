@@ -77,6 +77,7 @@ public class Player : Entity
 		}
 		else
 		{
+			PlayerSprite.Playing = true;
 			if (InvisFrames == 0 && Invisible)
 			{
 				Invisible = false;
@@ -99,6 +100,7 @@ public class Player : Entity
 				{
 					PauseFrames = 180;
 					Globals.Lives--;
+					PlayerSprite.Playing = false;
 					if (Globals.Lives < 0)
 					{
 						Globals.TimerActive = false;
@@ -459,6 +461,7 @@ public class Player : Entity
 				{
 					PauseFrames = 180;
 					Globals.Lives--;
+					PlayerSprite.Playing = false;
 					if (Globals.Lives < 0)
 					{
 						Globals.TimerActive = false;

@@ -30,6 +30,11 @@ public class Entity : Node2D
 
 	protected bool IsTileSolid(Vector2 tile)
 	{
-		return GetWorld2d().DirectSpaceState.IntersectPoint((tile * 24 * GetParent<Node2D>().GetParent<Node2D>().Scale) + GetParent<Node2D>().Position, 32, null, 1, false, true).Count > 0;
+		return IsTileSolid(tile, 1);
+	}
+
+	protected bool IsTileSolid(Vector2 tile, uint mask)
+	{
+		return GetWorld2d().DirectSpaceState.IntersectPoint((tile * 24 * GetParent<Node2D>().GetParent<Node2D>().Scale) + GetParent<Node2D>().Position, 32, null, mask, false, true).Count > 0;
 	}
 }
