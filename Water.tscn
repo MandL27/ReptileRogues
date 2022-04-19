@@ -5,7 +5,7 @@
 [ext_resource path="res://Entities/Switch/Switch.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/Pickup/Gem.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Entities/Pole/Pole.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Sprites/Tilesets/EarthTiles.tres" type="TileSet" id=6]
+[ext_resource path="res://Sprites/Tilesets/WaterTiles.tres" type="TileSet" id=6]
 [ext_resource path="res://Sprites/Tilesets/s_water3.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Tilesets/s_water1.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/Tilesets/s_water2.png" type="Texture" id=9]
@@ -29,6 +29,7 @@ frame_2/delay_sec = 0.0
 scale = Vector2( 3, 3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+visible = false
 z_index = 8
 
 [node name="Enemies" type="Node2D" parent="."]
