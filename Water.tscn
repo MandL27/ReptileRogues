@@ -194,7 +194,6 @@ position = Vector2( -600, 192 )
 position = Vector2( -600, -456 )
 
 [node name="Switch" parent="." instance=ExtResource( 3 )]
-visible = false
 position = Vector2( -240, 96 )
 
 [node name="Door" parent="Switch" instance=ExtResource( 13 )]

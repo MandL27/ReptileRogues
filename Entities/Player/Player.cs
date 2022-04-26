@@ -39,6 +39,7 @@ public class Player : Entity
 		FadeRect = GetNode<Camera2D>("Camera2D").GetNode<Node2D>("HUD").GetNode<ColorRect>("ColorRect");
 		SpawnPos = GlobalPosition;
 		SCScene = GD.Load<PackedScene>("res://UI/StageComplete.tscn");
+		Globals.Gems = 0;
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
@@ -58,22 +59,36 @@ public class Player : Entity
 			Action = Action.None;
 			BufferAction = Action.None;
 			InitialPos = Vector2.Zero;
-			if (PauseFrames == 121 && !OverGoal)
+			if (PauseFrames == 121)
 			{
 				FadeOut();
 			}
 			if (PauseFrames == 60 && !OverGoal)
 			{
 				GlobalPosition = SpawnPos;
+				Globals.RollSpeed = Globals.Score;
 			}
 			if (PauseFrames == 31 && !OverGoal)
 			{
 				FadeIn();
+				Globals.RollSpeed = 10;
+			}
+			if (PauseFrames == 0 && !OverGoal)
+			{	
+				Globals.TimerActive = true;
 			}
 		}
-		else if (PauseFrames == 0 && Globals.TimerActive == false && OverGoal)
+		else if (PauseFrames < 60 && !Globals.TimerActive && OverGoal)
 		{
-			System.Environment.Exit(0);
+			try
+			{
+				GetTree().ChangeScene(Globals.LevelNames[Globals.CurrentLevel + 1]);
+				Globals.CurrentLevel++;
+			}
+			catch
+			{
+				System.Environment.Exit(0);
+			}
 		}
 		else
 		{
@@ -109,7 +124,7 @@ public class Player : Entity
 				}
 				if (OverGoal)
 				{
-					PauseFrames = 240;
+					PauseFrames = 300;
 					Globals.TimerActive = false;
 					Globals.TimerPauseFrames = int.MaxValue;
 					Node2D node = SCScene.Instance<Node2D>();
