@@ -4,7 +4,6 @@ using System;
 public class Time : Node2D
 {
 	// Declare member variables here.
-	int Timer = 0;
 	AnimatedSprite[] Digits = new AnimatedSprite[7];
 
 	// Called when the node enters the scene tree for the first time.
@@ -24,8 +23,8 @@ public class Time : Node2D
 	{
 		if (Globals.TimerActive)
 		{
-			Timer++;
-			TimeSpan span = new TimeSpan(0, 0, 0, 0, Timer * 50 / 3);
+			Globals.Timer++;
+			TimeSpan span = new TimeSpan(0, 0, 0, 0, Globals.Timer * 50 / 3);
 			string timeStr = span.ToString(@"m\:ss\.ff");
 			if (span.TotalMinutes >= 10)
 			{

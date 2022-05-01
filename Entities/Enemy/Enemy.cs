@@ -62,6 +62,7 @@ public class Enemy : Entity
 		PathCells.RemoveAt(PathCells.Count - 1);
 		Heading = PathCells[NextCell] - PathCells[CurrCell];
 		SightPivot.Rotation = Heading.Angle();
+		EnemySprite.SpeedScale = Speed;
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.
@@ -75,6 +76,8 @@ public class Enemy : Entity
 				CurrCell = 0;
 				NextCell = 1;
 				Position = PathCells[0] * 24;
+				Heading = PathVecs[0].Normalized();
+				ChaseTarget = null;
 			}
 			else if (((Player)ChaseTarget).PauseFrames > 0)
 			{
@@ -151,12 +154,16 @@ public class Enemy : Entity
 						if (i == PathCells.Count) i = 0;
 					}
 				}
-				SightPivot.Rotation = Heading.Angle();
 				if (IsTileSolid(GetTilePos() + Heading, 3))
 				{
-					Heading *= -1;
+					CurrCell = 0;
+					NextCell = 1;
+					Position = PathCells[0] * 24;
+					Heading = PathVecs[0].Normalized();
+					ChaseTarget = null;
 					GD.Print("oops");
 				}
+				SightPivot.Rotation = Heading.Angle();
 			}
 			Position += Heading;
 		}

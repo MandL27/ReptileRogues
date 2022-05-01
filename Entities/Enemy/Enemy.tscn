@@ -18,6 +18,8 @@ collision_mask = 4
 position = Vector2( 0, -10 )
 frames = ExtResource( 3 )
 animation = "Right"
+frame = 3
+playing = true
 
 [node name="Pivot" type="Node2D" parent="." index="2"]
 

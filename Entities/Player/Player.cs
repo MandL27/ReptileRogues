@@ -124,7 +124,7 @@ public class Player : Entity
 				}
 				if (OverGoal)
 				{
-					PauseFrames = 300;
+					PauseFrames = 302;
 					Globals.TimerActive = false;
 					Globals.TimerPauseFrames = int.MaxValue;
 					Node2D node = SCScene.Instance<Node2D>();

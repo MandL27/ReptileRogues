@@ -4,7 +4,7 @@
 [ext_resource path="res://Entities/Enemy/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Entities/Pole/Pole.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/Pickup/Gem.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Sprites/Tilesets/IntroTiles.tres" type="TileSet" id=6]
+[ext_resource path="res://Sprites/Tilesets/AirTiles.tres" type="TileSet" id=6]
 [ext_resource path="res://Sprites/Tilesets/s_water3.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/Tilesets/s_water1.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/Tilesets/s_water2.png" type="Texture" id=9]
@@ -232,6 +232,126 @@ z_index = 6
 
 [node name="Gem" parent="Gems" instance=ExtResource( 4 )]
 position = Vector2( -24, -216 )
+
+[node name="Gem2" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -96, -408 )
+
+[node name="Gem3" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -288, -312 )
+
+[node name="Gem4" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -288, -456 )
+
+[node name="Gem11" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -360, -432 )
+
+[node name="Gem7" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -672, -432 )
+
+[node name="Gem19" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -576, -504 )
+
+[node name="Gem20" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -744, -672 )
+
+[node name="Gem21" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -912, -504 )
+
+[node name="Gem18" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -744, -336 )
+
+[node name="Gem8" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -672, -576 )
+
+[node name="Gem9" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -816, -576 )
+
+[node name="Gem10" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -816, -432 )
+
+[node name="Gem5" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -72, -552 )
+
+[node name="Gem6" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -48, -648 )
+
+[node name="Gem12" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -48, -744 )
+
+[node name="Gem13" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -120, -888 )
+
+[node name="Gem22" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -264, -840 )
+
+[node name="Gem23" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -480, -888 )
+
+[node name="Gem24" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -720, -768 )
+
+[node name="Gem14" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -600, -864 )
+
+[node name="Gem16" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -744, -840 )
+
+[node name="Gem17" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -984, -936 )
+
+[node name="Gem40" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -936, -984 )
+
+[node name="Gem41" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1032, -888 )
+
+[node name="Gem26" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1008, -1056 )
+
+[node name="Gem27" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1128, -1008 )
+
+[node name="Gem28" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1392, -1080 )
+
+[node name="Gem29" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1128, -1152 )
+
+[node name="Gem30" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -936, -1176 )
+
+[node name="Gem31" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1128, -1272 )
+
+[node name="Gem32" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1584, -1536 )
+
+[node name="Gem36" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1392, -1560 )
+
+[node name="Gem37" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1512, -1416 )
+
+[node name="Gem38" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1728, -1464 )
+
+[node name="Gem39" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1632, -1488 )
+
+[node name="Gem33" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1272, -1464 )
+
+[node name="Gem34" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1464, -1392 )
+
+[node name="Gem35" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -1536, -1248 )
+
+[node name="Gem15" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -408, -792 )
+
+[node name="Gem25" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -288, -744 )
 
 [node name="Area2D2" type="Area2D" parent="."]
 position = Vector2( -12, -12 )
