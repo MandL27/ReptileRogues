@@ -9,7 +9,7 @@ public class Enemy : Entity
 	[Export] Vector2[] PathVecs = new Vector2[2];
 	[Export] float Speed = 1;
 	[Export] EnemyType Type = EnemyType.Normal;
-	AnimatedSprite EnemySprite;
+	public AnimatedSprite EnemySprite { get; private set; }
 	float SpeedRem = 0;
 	int CurrCell = 0;
 	int NextCell = 1;
@@ -78,10 +78,24 @@ public class Enemy : Entity
 				Position = PathCells[0] * 24;
 				Heading = PathVecs[0].Normalized();
 				ChaseTarget = null;
+				EnemySprite.SpeedScale = Speed;
 			}
 			else if (((Player)ChaseTarget).PauseFrames > 0)
 			{
 				ChaseTarget = null;
+				Heading *= -1;
+				ReturnQueue = FindAStarPath(PathCells[CurrCell]);
+				try
+				{
+					Heading = ReturnQueue.ElementAt(1) - GetTilePos();
+				}
+				catch (ArgumentOutOfRangeException x)
+				{
+					GD.Print("oop");
+					ReturnQueue.Clear();
+					Heading = PathCells[NextCell] - PathCells[CurrCell];
+				}
+				EnemySprite.SpeedScale = Speed;
 			}
 			else
 			{
@@ -103,6 +117,7 @@ public class Enemy : Entity
 					if (!IsInRange(GetTilePos() + Heading) || vecs.Count < 2)
 					{
 						ChaseTarget = null;
+						EnemySprite.SpeedScale = Speed;
 						Heading *= -1;
 						ReturnQueue = FindAStarPath(PathCells[CurrCell]);
 						try
@@ -161,13 +176,13 @@ public class Enemy : Entity
 					Position = PathCells[0] * 24;
 					Heading = PathVecs[0].Normalized();
 					ChaseTarget = null;
+					EnemySprite.SpeedScale = Speed;
 					GD.Print("oops");
 				}
 				SightPivot.Rotation = Heading.Angle();
 			}
 			Position += Heading;
 		}
-		// TODO: homing
 		switch (((int)Mathf.Rad2Deg(Heading.Angle()) + 360) % 360)
 		{
 			case 0:

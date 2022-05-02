@@ -185,7 +185,7 @@ public class Player : Entity
 						if (InvisFrames == 0 && !Invisible)
 						{
 							Invisible = true;
-							InvisFrames = 600;
+							InvisFrames = 300;
 							PlayerSprite.Modulate = new Godot.Color(1, 1, 1, 0.5f);
 						}
 						break;
@@ -487,6 +487,7 @@ public class Player : Entity
 			case 16: // enemy line of sight
 				if (!Invisible)
 					((Enemy)(a.GetParent().GetParent())).ChaseTarget = this;
+					((Enemy)(a.GetParent().GetParent())).EnemySprite.SpeedScale *= 1.5f;
 				break;
 			case 32: // pickup
 				a.GetParent().QueueFree();
