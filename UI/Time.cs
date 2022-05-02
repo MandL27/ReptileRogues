@@ -37,6 +37,18 @@ public class Time : Node2D
 		}
 		else
 		{
+			if (Globals.Timer > 0 && Globals.TimerPauseFrames == int.MaxValue - 60)
+			{
+				Globals.RollSpeed = 40;
+				if (Globals.Timer < Globals.ParTimes[Globals.CurrentLevel])
+					Globals.Score += 4000;
+				else if (Globals.Timer < Globals.ParTimes[Globals.CurrentLevel] * 1.25)
+					Globals.Score += 2000;
+				else if (Globals.Timer < Globals.ParTimes[Globals.CurrentLevel] * 1.5)
+					Globals.Score += 1000;
+				else if (Globals.Timer < Globals.ParTimes[Globals.CurrentLevel] * 1.75)
+					Globals.Score += 500;
+			}
 			Globals.TimerPauseFrames--;
 			if (Globals.TimerPauseFrames < 0)
 			{
