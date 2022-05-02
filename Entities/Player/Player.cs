@@ -9,6 +9,7 @@ public class Player : Entity
 	AnimatedSprite TongueSprite;
 	ColorRect FadeRect;
 	Vector2 SpawnPos = Vector2.Zero;
+	Checkpoint LastCp = null;
 	Vector2 InitialPos = Vector2.Zero;
 	Vector2 Direction = Vector2.Zero;
 	Vector2 Heading = Vector2.Up;
@@ -499,7 +500,9 @@ public class Player : Entity
 				break;
 			case 256: // checkpoint
 				SpawnPos = a.GlobalPosition;
-				a.GetParent<Checkpoint>().Activate();
+				if (LastCp != null) LastCp.Deactivate();
+				LastCp = a.GetParent<Checkpoint>();
+				LastCp.Activate();
 				break;
 			case 512: // goal
 				OverGoal = true;

@@ -34,4 +34,12 @@ public class Checkpoint : Entity
 		FlagSprite.Playing = true;
 		RaiseFrames = 18;
 	}
+
+	public void Deactivate()
+	{
+		Area.GetNode<CollisionShape2D>("Collider").SetDeferred("disabled", false);
+		FlagSprite.Animation = "Off";
+		FlagSprite.Playing = false;
+		RaiseFrames = -1;
+	}
 }

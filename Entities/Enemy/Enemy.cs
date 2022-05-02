@@ -94,6 +94,7 @@ public class Enemy : Entity
 					GD.Print("oop");
 					ReturnQueue.Clear();
 					Heading = PathCells[NextCell] - PathCells[CurrCell];
+					Position = PathCells[CurrCell] * 24;
 				}
 				EnemySprite.SpeedScale = Speed;
 			}
@@ -129,6 +130,7 @@ public class Enemy : Entity
 							GD.Print("oop");
 							ReturnQueue.Clear();
 							Heading = PathCells[NextCell] - PathCells[CurrCell];
+							Position = PathCells[CurrCell] * 24;
 						}
 					}
 				}
