@@ -41,6 +41,7 @@ public class Player : Entity
 		SpawnPos = GlobalPosition;
 		SCScene = GD.Load<PackedScene>("res://UI/StageComplete.tscn");
 		Globals.Gems = 0;
+		Globals.Timer = 0;
 	}
 
 	// Called every tick. 'delta' is the elapsed time since the previous frame.

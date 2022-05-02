@@ -116,8 +116,53 @@ z_index = 6
 [node name="Gem" parent="Gems" instance=ExtResource( 4 )]
 position = Vector2( 120, 144 )
 
+[node name="Gem3" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -144, 96 )
+
+[node name="Gem20" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -240, 168 )
+
+[node name="Gem21" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -24, 168 )
+
+[node name="Gem22" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( 24, 168 )
+
+[node name="Gem23" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( 24, 432 )
+
+[node name="Gem24" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( 24, 528 )
+
 [node name="Gem2" parent="Gems" instance=ExtResource( 4 )]
 position = Vector2( -504, 408 )
+
+[node name="Gem12" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -600, 264 )
+
+[node name="Gem25" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -576, 360 )
+
+[node name="Gem13" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -552, -192 )
+
+[node name="Gem14" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -648, -216 )
+
+[node name="Gem15" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -624, -24 )
+
+[node name="Gem16" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -552, 48 )
+
+[node name="Gem17" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -696, 72 )
+
+[node name="Gem18" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -456, -144 )
+
+[node name="Gem19" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -696, -168 )
 
 [node name="Gem4" parent="Gems" instance=ExtResource( 4 )]
 position = Vector2( 168, 144 )
@@ -134,8 +179,14 @@ position = Vector2( -72, 384 )
 [node name="Gem8" parent="Gems" instance=ExtResource( 4 )]
 position = Vector2( -72, 576 )
 
+[node name="Gem9" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -264, 624 )
+
 [node name="Gem10" parent="Gems" instance=ExtResource( 4 )]
-position = Vector2( -408, 528 )
+position = Vector2( -432, 528 )
+
+[node name="Gem11" parent="Gems" instance=ExtResource( 4 )]
+position = Vector2( -384, 528 )
 
 [node name="Area2D2" type="Area2D" parent="."]
 position = Vector2( -12, -12 )
