@@ -69,18 +69,19 @@ public class Enemy : Entity
 	public override void _PhysicsProcess(float delta)
 	{
 		SpeedRem += Speed;
+
+		if (((Player)ChaseTarget).PauseFrames == 1)
+		{
+			CurrCell = 0;
+			NextCell = 1;
+			Position = PathCells[0] * 24;
+			Heading = PathVecs[0].Normalized();
+			ChaseTarget = null;
+			EnemySprite.SpeedScale = Speed;
+		}
 		if (ChaseTarget != null)
 		{
-			if (((Player)ChaseTarget).PauseFrames == 1)
-			{
-				CurrCell = 0;
-				NextCell = 1;
-				Position = PathCells[0] * 24;
-				Heading = PathVecs[0].Normalized();
-				ChaseTarget = null;
-				EnemySprite.SpeedScale = Speed;
-			}
-			else if (((Player)ChaseTarget).PauseFrames > 0)
+			if (((Player)ChaseTarget).PauseFrames > 0)
 			{
 				ChaseTarget = null;
 				Heading *= -1;

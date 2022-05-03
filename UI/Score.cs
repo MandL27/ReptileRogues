@@ -21,6 +21,11 @@ public class Score : Node2D
 	// Called every tick. 'delta' is the elapsed time since the previous tick.
 	public override void _PhysicsProcess(float delta)
 	{
+		if (Globals.Score >= 5000 * (Globals.LivesGiven + 1))
+		{
+			Globals.Lives++;
+			Globals.LivesGiven++;
+		}
 		bool updated = false;
 		if (ScoreRoll < Globals.Score)
 		{

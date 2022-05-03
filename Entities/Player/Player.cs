@@ -53,7 +53,7 @@ public class Player : Entity
 			int i = FadeFrames;
 			if (!FadingIn) i = 30 - i;
 			FadeRect.Color = new Color((int)FadeColors[i]);
-			if (PauseFrames > 180 && FadeFrames == 0) System.Environment.Exit(0);
+			if (PauseFrames > 180 && FadeFrames == 0) GetTree().ChangeScene("Title.tscn");
 		}
 		if (PauseFrames > 0)
 		{
@@ -89,7 +89,8 @@ public class Player : Entity
 			}
 			catch
 			{
-				System.Environment.Exit(0);
+				Globals.CurrentLevel++;
+				GetTree().ChangeScene("Title.tscn");
 			}
 		}
 		else
