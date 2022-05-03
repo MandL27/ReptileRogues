@@ -70,7 +70,7 @@ public class Enemy : Entity
 	{
 		SpeedRem += Speed;
 
-		if (((Player)ChaseTarget).PauseFrames == 1)
+		if (GetParent().GetParent().GetNode<Player>("Player").PauseFrames == 35)
 		{
 			CurrCell = 0;
 			NextCell = 1;

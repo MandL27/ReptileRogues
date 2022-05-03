@@ -32,7 +32,7 @@ public class Score : Node2D
 			ScoreRoll += Globals.RollSpeed;
 			updated = true;
 		}
-		if (ScoreRoll > Globals.Score)
+		if (ScoreRoll > Globals.Score || ScoreRoll < 0)
 		{
 			ScoreRoll = Globals.Score;
 			updated = true;
